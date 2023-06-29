@@ -1,0 +1,16 @@
+services:
+  tracking-mariadb:
+    image: mariadb:10.4.27
+    environment:
+      - "MARIADB_ROOT_PASSWORD=admin"
+      - "MARIADB_USER=tracking_user"
+      - "MARIADB_PASSWORD=localTrackingPw"
+    ports:
+      - "3309:3306"
+    volumes:
+      - type: bind
+        source: ./my.cnf
+        target: /etc/mysql/conf.d/my.cnf
+      - type: bind
+        source: ./tracking-baseline.sql
+        target: /docker-entrypoint-initdb.d/000-init.sql
